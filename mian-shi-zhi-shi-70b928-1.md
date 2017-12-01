@@ -22,9 +22,9 @@ super：仅仅是一个编译指示器，就是给编译器看的，不是一个
 
 1.苹果推荐使用const而不是宏\(Swift取消宏\)。
 
-2.编译时刻 宏：预编译             const：编译
+2.编译时刻 宏：预编译             const：编译
 
-3.编译检查 宏：没有编译检查  const：有编译检查
+3.编译检查 宏：没有编译检查  const：有编译检查
 
 4.宏的好处 可以定义函数.方法 const不可以
 
@@ -38,7 +38,7 @@ const作用
 
 开发过程中的使用
 
-1.修饰全局变量 ==&gt;全局只读变量 ==&gt;代替宏 NSString \*const name = @“name” 
+1.修饰全局变量 ==&gt;全局只读变量 ==&gt;代替宏 NSString \*const name = @“name”
 
 2.修饰方法中的参数
 
@@ -64,7 +64,7 @@ extern
 
 工作原理：先去当前文件下有没有对应的全局变量，如果没有再去其他文件查找。
 
-Static  NSString \*const name = @“name”
+Static  NSString \*const name = @“name”
 
 Extern NSString \*const name = @“name”
 
@@ -104,15 +104,15 @@ C语言的函数调用在编译的的时候决定调用哪个函数。
 
 OC属于动态调用过程，在编译的时候并不能决定真正调用哪个函数，只有在真正运行的时候才会根据函数的名称找到对应的函数进行调用。
 
-1.RunTime如何利用发送消息的方法创建类  可以用RunTime调用私有方法。
+1.RunTime如何利用发送消息的方法创建类  可以用RunTime调用私有方法。
 
 `id objc = objc_msgSend([NSObject class],@selector(alloc));`
 
 `id objc = objc_msgSend(objc_getClass(“NSObject”),objc_registerName”alloc");`
 
-`objc = objc_msgSend(objc,@selector(init));`
+`objc = objc_msgSend(objc,@selector(init));`
 
-`objc = objc_msgSend(objc,objc_registerName”init");`
+`objc = objc_msgSend(objc,objc_registerName”init");`
 
 相当于
 
@@ -124,11 +124,11 @@ OC属于动态调用过程，在编译的时候并不能决定真正调用哪个
 
 `+(void)load{// 交换方法`
 
-`  Method imageNamedMethod class_getClassMethod(self,@selector(imageNamed:));`
+`Method imageNamedMethod class_getClassMethod(self,@selector(imageNamed:));`
 
-`  Method xmg_imageNamedMethod  class_getClassMethod(self,@selector(xmg_imageNamed:));  `
+`Method xmg_imageNamedMethod  class_getClassMethod(self,@selector(xmg_imageNamed:));`
 
-`  method_exchangeImplementations(imageNamedMethod,xmg_imageNamedMethod);`
+`method_exchangeImplementations(imageNamedMethod,xmg_imageNamedMethod);`
 
 `}`
 
@@ -138,7 +138,7 @@ RunLoop基本作用:
 
 1.保持程序持续运行
 
-2.处理App中的各种事件\( 比如触摸事件、定时器事件、Selectot事件\) 
+2.处理App中的各种事件\( 比如触摸事件、定时器事件、Selectot事件\)
 
 3.节省CPU资源，提高程序性能，该做事的时候做事该休息的时候休息
 
@@ -150,18 +150,17 @@ RunLoop与线程关系
 
 3.RunLoop在第一次获取的时候创建，在线程结束时销毁
 
-  
 一个RunLoop包含若干个Mode，每一个Mode又包含若干个Source/Timer/Observer
 
 KCFRunLoopDefaultMode 默认 主线程在此模式下运行
 
-UITrackingRunLoopMode  界面追踪Mode
+UITrackingRunLoopMode  界面追踪Mode
 
 UIInitializationRunLoopMode 刚启动App进入的第一个Mode，启动完成后就不再使用
 
 GSEventReceiveRunLoopMode 接收系统事件内部Model
 
-KCFRunLoopCommonModes  占位Mode
+KCFRunLoopCommonModes  占位Mode
 
 每一个RunLoop有多重运行模式，但同一时间只能存在一种运行模式，每一个运行模式下有很多source\(事件源 需要RunLoop来处理的\)、timer、observer。
 
@@ -196,6 +195,64 @@ RunLoop的使用场景？
 2.子线程开启定时器
 
 3.在子线程中进行一些长期监控
+
+#### 9.iOS性能优化总结
+
+对于main\(\)函数调用之前我们可以优化的点有：启动速度优化
+
+1.不使用XIB，直接使用代码加载首页视图，因为XIB会在主线程中执行影响速度
+
+2.NSUserDefaults实际上是在Library文件夹下会生产一个plist文件，如果文件太大的话一次能读取到内存中可能很耗时，这个影响需要评估，如果耗时很大的话需要拆分\(需考虑老版本覆盖安装兼容问题\)
+
+3.每次用NSLog方式打印会隐式的创建一个Calendar，因此需要删减启动时各业务方打的log，或者仅仅针对内测版输出log
+
+4.梳理应用启动时发送的所有网络请求，是否可以统一在异步线程请求
+
+#### 10.App使用性能优化
+
+1.正确使用ReuseIdentifier进行复用和懒加载
+
+2.尽量把View设置为完全不透明\(如果不是完全透明会引入更多的计算，把下面的图层也包含进来计算混合后的颜色\)
+
+3.避免过于庞大的XIB\(当你加载了一个引用图片或声音资源的XIB，XIB加载代码的时候会把图片声音文件也如内存\)
+
+4.不要堵塞主线程
+
+5.尽量保重图片大小和你所设置的大小相同
+
+6.解析Json会比XML更快速一些
+
+7.选择正确的数据存储
+
+8.图片选择是否缓存\(imageNamed或imageWithContentsOFFile\)
+
+9.删除没有用到的类
+
+10.启动时图片尽可能压缩小一点
+
+#### 11.TableView优化
+
+1.正确使用ReuseIdentifier进行复用
+
+2.所有View透明度包括Cell本身完全不透明
+
+3.避免渐变图片缩放
+
+4.缓存行高
+
+[http://blog.csdn.net/intheair100/article/details/62888017](http://blog.csdn.net/intheair100/article/details/62888017)
+
+[http://www.jianshu.com/p/64f0e1557562](http://www.jianshu.com/p/64f0e1557562)
+
+5.如果Cell内部实现的内容来自Web使用异步加载缓存请求结果
+
+6.减少subView的数量
+
+7.加载图片异步
+
+[http://blog.csdn.net/mo\_xiao\_mo/article/details/52622172](http://blog.csdn.net/mo_xiao_mo/article/details/52622172)
+
+[http://blog.csdn.net/icefishlily/article/details/52606221](http://blog.csdn.net/icefishlily/article/details/52606221)
 
 
 
