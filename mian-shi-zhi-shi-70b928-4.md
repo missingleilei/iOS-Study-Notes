@@ -2,41 +2,41 @@
 
 `- (void)test1{`
 
-`    NSString *string1 = @"`[`www.zhidao.baidu.com`](http://www.zhidao.baidu.com)`”;`
+`NSString *string1 = @"`[`www.zhidao.baidu.com`](http://www.zhidao.baidu.com)`”;`
 
-`    NSArray *stringArray = [string1 componentsSeparatedByString:@".”];`
+`NSArray *stringArray = [string1 componentsSeparatedByString:@".”];`
 
-`    NSArray *array = [[stringArray reverseObjectEnumerator] allObjects];`
+`NSArray *array = [[stringArray reverseObjectEnumerator] allObjects];`
 
-`    // 3、遍历倒叙后的数组，拼接 ‘/'`
+`// 3、遍历倒叙后的数组，拼接 ‘/'`
 
-`    __block NSString *string2 = @“";`
+`__block NSString *string2 = @“";`
 
-`    [array enumerateObjectsUsingBlock:^(NSString  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {`
+`[array enumerateObjectsUsingBlock:^(NSString  *_Nonnull obj, NSUInteger idx, BOOL * _Nonnull stop) {`
 
-`       NSString *str = obj;`
+`NSString *str = obj;`
 
-`       if (idx != array.count-1){`
+`if (idx != array.count-1){`
 
-`           str = [obj stringByAppendingString:@"/"];`
+`str = [obj stringByAppendingString:@"/"];`
 
-`        }`
+`}`
 
-`       string2 = [string2 stringByAppendingString:str];`
+`string2 = [string2 stringByAppendingString:str];`
 
-`    }];`
+`}];`
 
 `}`
 
 `- (void)test2{`
 
-` NSString *str = @"`[`www.zhidao.baidu.com`](http://www.zhidao.baidu.com)`”;`
+`NSString *str = @"`[`www.zhidao.baidu.com`](http://www.zhidao.baidu.com)`”;`
 
-` NSArray *array = [str componentsSeparatedByString:@"."];`
+`NSArray *array = [str componentsSeparatedByString:@"."];`
 
-` NSArray *resultArr = [[array reverseObjectEnumerator] allObjects];`
+`NSArray *resultArr = [[array reverseObjectEnumerator] allObjects];`
 
-` NSString *resultStr = [resultArr componentsJoinedByString:@"/“];`
+`NSString *resultStr = [resultArr componentsJoinedByString:@"/“];`
 
 `}`
 
@@ -88,27 +88,27 @@ weak比assign多了一个功能就是当属性所指向的对象消失的时候�
 
 4.Controller的automaticallyAdjustsScrollViewInsets属性被废弃且scrollView新增的两个属性：adjustContentInset和contentInsetAdjustmentBehavior
 
-\#define NaviHeight Is\_Iphone\_X ? 88: 64
+\#define NaviHeight Is\_Iphone\_X ? 88: 64
 
-\#define TabbarHeight Is\_Iphone\_X ? 83: 49
+\#define TabbarHeight Is\_Iphone\_X ? 83: 49
 
-\#define BottomHeight Is\_Iphone\_X ? 34: 0
+\#define BottomHeight Is\_Iphone\_X ? 34: 0
 
 ##### iOS11 TableView适配
 
 `if (@available(iOS 11.0, *)) {`
 
-`    self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;//UIScrollView也适用`
+`self.tableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;//UIScrollView也适用`
 
 `}else {`
 
-`    self.automaticallyAdjustsScrollViewInsets = NO;`
+`self.automaticallyAdjustsScrollViewInsets = NO;`
 
 `}`
 
 ##### iOS11 地图不想提示是否允许定位
 
-`Privacy - Location Always Usage Description   //删掉这个iOS11可提示`
+`Privacy - Location Always Usage Description   //删掉这个iOS11可提示`
 
 `Privacy - Location When In Use Usage Description`
 
@@ -140,11 +140,11 @@ mutableCopy：产生的对象副本是可变的
 
 RSA非对称加密算法
 
-由商户自己生成的RSA公钥（与应用私钥必须匹配），商户需上传应用公钥到支付宝开放平台，以便支付宝使用该公钥验证该交易是否是商户发起的。 
+由商户自己生成的RSA公钥（与应用私钥必须匹配），商户需上传应用公钥到支付宝开放平台，以便支付宝使用该公钥验证该交易是否是商户发起的。
 
 ##### 应用私钥：
 
-由商户自己生成的RSA私钥（与应用公钥必须匹配），商户开发者使用应用私钥对请求字符串进行加签。 
+由商户自己生成的RSA私钥（与应用公钥必须匹配），商户开发者使用应用私钥对请求字符串进行加签。
 
 ##### 支付宝公钥：
 
