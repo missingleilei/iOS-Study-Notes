@@ -12,3 +12,13 @@ AVPlayer播放和暂停没有对应的状态，通常情况下可以通过判断
 
 AVPlayer和AVPlayerItem（AVPlayer有一个属性currentItem是AVPlayerItem类型，表示当前播放的视频对象）都无法获得播放器状态和媒体加载状态。
 
+AVPlayerItem的相关通知只有AVPlayerItemDidPlayToEndTimeNotification--播放完成通知。
+
+当想获取视频加载情况、缓冲情况、播放情况，这些信息可以通过KVO监控AVPlayerItem的status、loadedTimeRanges属性来获得。
+
+当AVPlayerItem的status属性为AVPlayerStatusReadyToPlay是说明正在播放，只有处于这个状态时才能获得视频时长等信息；当loadedTimeRanges的改变时（每缓冲一部分数据就会更新此属性）可以获得本次缓冲加载的视频范围（包含起始时间、本次加载时长），这样一来就可以实时获得缓冲情况。然后就是依靠AVPlayer的`- (id)addPeriodicTimeObserverForInterval:(CMTime)interval queue:(dispatch_queue_t)queue usingBlock:(void (^)(CMTime time))block`方法获得播放进度。这个方法会在设定的时间间隔内定时更新播放进度，通过time参数通知客户端。相信有了这些视频信息播放进度就不成问题了，事实上通过这些信息就算是平时看到的其他播放器的缓冲进度显示以及拖动播放的功能也可以顺利的实现。
+
+视频切换的功能，在前面介绍的所有播放器中每个播放器对象一次只能播放一个视频，如果要切换视频只能重新创建一个对象，但是AVPlayer却提供了\(void\)replaceCurrentItemWithPlayerItem:\(AVPlayerItem \*\)item方法用于在不同的视频之间切换。
+
+
+
