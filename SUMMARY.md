@@ -11,4 +11,5 @@
 * [面试知识点\(4\)](mian-shi-zhi-shi-70b928-4.md)
 * [视图和图层的关系](shi-tu-he-tu-ceng-de-guan-xi.md)
 * [音频播放](yin-pin-bo-fang.md)
+* [iOS非常实用的小知识总结](iosfei-chang-shi-yong-de-xiao-zhi-shi-zong-jie.md)
 
