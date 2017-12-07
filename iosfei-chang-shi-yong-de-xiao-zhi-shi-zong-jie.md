@@ -102,7 +102,120 @@ shapeLayer.lineWidth = 0.5;
 [self.layer addSublayer:shapeLayer];
 ```
 
+##### 13.判断含有某个字符串
 
+```
+ if ([actionSheet.title rangeOfString:@"://"].location == NSNotFound 如果为false，表示含有://字符
+```
+
+##### 14.Library not loaded: 错误解决方法
+
+```
+在build phases 改为optional 
+```
+
+##### 15.Xcode调试不能停在代码区域
+
+```
+只要 XCode中 Debug ->Debug Workflow - Always Shaw Disassembly 取消打勾就可以了
+```
+
+##### 16.主线程更新UI
+
+```
+__weak typeof(self) weakSelf = self;
+dispatch_async(dispatch_get_main_queue(), ^{
+     weakSelf.tableView.tableHeaderView = weakSelf.headView;
+     [weakSelf.tableView reloadData];
+});
+```
+
+##### 17.判断对象是否为空
+
+```
+- (BOOL)isNull{
+     if ([self isEqual:[NSNull null]]) {
+     return YES;
+     }else{
+         if ([self isKindOfClass:[NSNull class]]){
+         return YES;
+         }else{
+         if (self==nil){
+         return YES;    
+          }}}
+       if ([self isKindOfClass:[NSString class]]) { if ([((NSString *)self) isEqualToString:@"(null)"]) {
+       return YES;
+       }}
+       return NO;
+  }
+```
+
+##### 18.cocoapods添加了新库但不想更新之前的库
+
+```
+pod install --no-repo-update
+```
+
+##### 19.将试图放到最下面 或最上面
+
+```
+[self.mainView addSubview:imageView];
+[self.mainView sendSubviewToBack:imageView];  底下
+[self.mainView bringSubviewToFront :imageView]; 朝上
+```
+
+##### 20.IQKeyboardManager键盘库的简单使用
+
+```
+// 获取类库的单例变量
+IQKeyboardManager *keyboardManager = [IQKeyboardManager sharedManager];
+// 控制整个功能是否启用
+keyboardManager.enable = YES;
+// 控制点击背景是否收起键盘
+keyboardManager.shouldResignOnTouchOutside = YES;
+// 控制键盘上的工具条文字颜色是否用户自定义
+keyboardManager.shouldToolbarUsesTextFieldTintColor = YES;
+// 有多个输入框时，可以通过点击Toolbar 上的“前一个”“后一个”按钮来实现移动到不同的输入框
+keyboardManager.toolbarManageBehaviour = IQAutoToolbarBySubviews;
+// 控制是否显示键盘上的工具条
+keyboardManager.enableAutoToolbar = YES;
+// 是否显示占位文字
+keyboardManager.shouldShowTextFieldPlaceholder = YES;
+// 设置占位文字的字体
+keyboardManager.placeholderFont = [UIFont boldSystemFontOfSize:17];
+// 输入框距离键盘的距离
+keyboardManager.keyboardDistanceFromTextField = 10.0f;
+keyboardManager.preventShowingBottomBlankSpace = NO;
+```
+
+##### 21.跳转到评价页面
+
+```
+NSString *str = [NSString stringWithFormat:@"itms-apps://ax.itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?type=Purple+Software
+&id=你的AppId" ];
+if( ([[[UIDevice currentDevice] systemVersion] doubleValue]>=7.0)){
+str = [NSString stringWithFormat:@"https://itunes.apple.com/WebObjects/MZStore.woa/wa/viewContentsUserReviews?id=你的AppId
+&pageNumber=0&sortOrdering=2&type=Purple+Software&mt=8"];}
+[[UIApplication sharedApplication] openURL:[NSURL URLWithString:str]];
+```
+
+##### 22.自动布局 autoLayout
+
+```
+setNeedsLayout：告知页面需要更新，但是不会立刻开始更新。执行后会立刻调用layoutSubviews。 
+layoutIfNeeded：告知页面布局立刻更新。所以一般都会和setNeedsLayout一起使用。如果希望立刻生成新的frame需要调用此方法，利用这点一般布局动画可以在更新布局后直接使用这个方法让动画生效。 
+layoutSubviews：系统重写布局 setNeedsUpdateConstraints：告知需要更新约束，但是不会立刻开始 
+updateConstraintsIfNeeded：告知立刻更新约束 
+updateConstraints：系统更新约束
+```
+
+##### 23.UIView 使用阴影产生离屏渲染卡顿相关链接
+
+\([http://blog.csdn.net/zixiweimi/article/details/39889623](https://link.jianshu.com/?t=http://blog.csdn.net/zixiweimi/article/details/39889623)\)
+
+```
+[self.view layer].shadowPath =[UIBezierPath bezierPathWithRect:self.mainView.bounds].CGPath;
+```
 
 
 
