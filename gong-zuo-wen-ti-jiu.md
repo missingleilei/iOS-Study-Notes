@@ -36,3 +36,69 @@ CGRectGetMaxY\(View\)
 
 **CGRectGetMaxY方法的作用得到目前view在当前屏幕中相对于整个View的最大值（位于屏幕的最下边）**
 
+##### 4.导航栏、TableView常见问题相关
+
+###### 1.调整contentInset
+
+`//NO：不调整，按设定的frame、contentInset的显示`
+
+`//YES：会调整contentInset.top的高，让显示的顶在导航栏下面，【有滑过半透明效果】`
+
+`self.automaticallyAdjustsScrollViewInsets =NO;`
+
+###### 2.调整frame
+
+`//UIRectEdgeNone//会顶在导航栏下面【没有滑过半透明效果】`
+
+`//UIRectEdgeTop//对齐原点`
+
+`//UIRectEdgeLeft//对齐左边`
+
+`//UIRectEdgeBottom//对齐顶部`
+
+`//UIRectEdgeRight//对齐右边`
+
+`//UIRectEdgeAll//对齐所有`
+
+`self.edgesForExtendedLayout = UIRectEdgeNone;`
+
+属性edgesForExtendedLayout，意思大概是边缘向四周展开
+
+edgesForExtendedLayout 值是结构体，默认值是 UIRectEdgeAll，
+
+也就是说，当一个控制器要往父控制器添加的时候，上下左右填充满整个屏幕。
+
+3.导航栏半透明
+
+`self.navigationController.navigationBar.translucent = YES;`
+
+###### 4.隐藏navigationBar\(1、它推过的所有的VC共用1个Bar；2、用继承View的hidden属性，隐藏不了！\)
+
+###### `self.navigationController.navigationBarHidden=YES;`
+
+###### 5.关于iOS11适配
+
+ScrollView新增安全区域。
+
+* 如果之前让TabelView顶住屏幕，然后设置顶部内边距 = 20+44，刚好在导航栏下面的话，会被系统向下偏移64的 SafeAreaInsets，再加上自己设置的64，就出现下移64问题。
+
+* 同理，没导航栏的时候，也会下移20 -&gt; 状态栏的高度。
+
+* 以前若设置 automaticallyAdjustsScrollViewInsets  = YES 让系统自动调整，不会有问题
+
+ 解决方案：添加下面，相当于 automaticallyAdjustsScrollViewInsets = NO
+
+`if (@available(iOS 11.0, *)) {`
+
+`_PersonalTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;//UIScrollView也适用`
+
+` }else {`
+
+`self.automaticallyAdjustsScrollViewInsets =NO;`
+
+`只对滚动视图有效。去除tableview的视图自动往下偏移。`
+
+` }`
+
+
+
