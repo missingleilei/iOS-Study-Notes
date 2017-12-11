@@ -84,21 +84,49 @@ ScrollView新增安全区域。
 
 * 同理，没导航栏的时候，也会下移20 -&gt; 状态栏的高度。
 
-* 以前若设置 automaticallyAdjustsScrollViewInsets  = YES 让系统自动调整，不会有问题
+* 以前若设置 automaticallyAdjustsScrollViewInsets  = YES 让系统自动调整，不会有问题
 
- 解决方案：添加下面，相当于 automaticallyAdjustsScrollViewInsets = NO
+  解决方案：添加下面，相当于 automaticallyAdjustsScrollViewInsets = NO
 
 `if (@available(iOS 11.0, *)) {`
 
 `_PersonalTableView.contentInsetAdjustmentBehavior = UIScrollViewContentInsetAdjustmentNever;//UIScrollView也适用`
 
-` }else {`
+`}else {`
 
 `self.automaticallyAdjustsScrollViewInsets =NO;`
 
 `只对滚动视图有效。去除tableview的视图自动往下偏移。`
 
-` }`
+`}`
 
+5.TableView分割线满屏显示
 
+`-(void)viewDidLayoutSubviews{`
+
+`  if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {`
+
+`       [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)]`
+
+`   }`
+
+`    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {`
+
+`        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];`
+
+`    }}`
+
+`-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{`
+
+`    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {`
+
+`        [cell setSeparatorInset:UIEdgeInsetsZero];    `
+
+`}`
+
+`    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {`
+
+`        [cell setLayoutMargins:UIEdgeInsetsZero];`
+
+`    }}`
 
