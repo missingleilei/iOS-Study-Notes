@@ -104,29 +104,41 @@ ScrollView新增安全区域。
 
 `-(void)viewDidLayoutSubviews{`
 
-`  if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {`
+`if ([self.tableView respondsToSelector:@selector(setSeparatorInset:)]) {`
 
-`       [self.tableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)]`
-
-`   }`
-
-`    if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {`
-
-`        [self.tableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];`
-
-`    }}`
-
-`-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{`
-
-`    if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {`
-
-`        [cell setSeparatorInset:UIEdgeInsetsZero];    `
+`[self.tableView setSeparatorInset:UIEdgeInsetsMake(0,0,0,0)]`
 
 `}`
 
-`    if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {`
+`if ([self.tableView respondsToSelector:@selector(setLayoutMargins:)]) {`
 
-`        [cell setLayoutMargins:UIEdgeInsetsZero];`
+`[self.tableView setLayoutMargins:UIEdgeInsetsMake(0,0,0,0)];`
 
-`    }}`
+`}}`
+
+`-(void)tableView:(UITableView *)tableView willDisplayCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath{`
+
+`if ([cell respondsToSelector:@selector(setSeparatorInset:)]) {`
+
+`[cell setSeparatorInset:UIEdgeInsetsZero];`
+
+`}`
+
+`if ([cell respondsToSelector:@selector(setLayoutMargins:)]) {`
+
+`[cell setLayoutMargins:UIEdgeInsetsZero];`
+
+`}}`
+
+##### 5.NSUserDefaults数据保存报错：Attempt to set a non-property-list object...
+
+这种错误的原因是插入了不识别的数据类型，NSUserDefaults支持的数据类型有
+
+NSString、 NSNumber、NSDate、 NSArray、NSDictionary
+
+、BOOL、NSInteger、NSFloat等系统定义的数据类型。
+
+自定义的类型需要转成NSData再存入。
+
+我原来认为NSUserDefaults存不了数组，又换成了字典，但是还是报错，最后求助网友大神解决了，是我里边的数据结构有"&lt;null&gt;"，而NSUserDefaults是不能被成功解析并存入的，所有在存入之前需要将里边的"&lt;null&gt;"改成""即可。
 
