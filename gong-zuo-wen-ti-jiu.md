@@ -142,3 +142,9 @@ NSString、 NSNumber、NSDate、 NSArray、NSDictionary
 
 我原来认为NSUserDefaults存不了数组，又换成了字典，但是还是报错，最后求助网友大神解决了，是我里边的数据结构有"&lt;null&gt;"，而NSUserDefaults是不能被成功解析并存入的，所有在存入之前需要将里边的"&lt;null&gt;"改成""即可。
 
+##### 6.AlertView弹出问题？
+
+当一个提示框需要弹出另一个提示框时需要延时否则可能无法正确弹出。
+
+
+
