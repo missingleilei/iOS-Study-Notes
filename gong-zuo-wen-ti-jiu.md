@@ -78,6 +78,13 @@ edgesForExtendedLayout 值是结构体，默认值是 UIRectEdgeAll，
 
 ###### 5.关于iOS11适配
 
+```
+1.关于检测是否开启定位的判断.在iOS11之前,一直都是使用kCLAuthorizationStatusAuthorizedAlways来进行检测是否开启定位服务。
+if ([CLLocationManager authorizationStatus] != kCLAuthorizationStatusAuthorizedAlways)但是到了IOS11  苹果禁止了always
+这个枚举值,但是并没有废弃,这就尴尬了,所以换了另一个枚举值if ([CLLocationManager authorizationStatus] != 
+kCLAuthorizationStatusAuthorizedWhenInUse),这样就可以检测了.
+```
+
 ScrollView新增安全区域。
 
 * 如果之前让TabelView顶住屏幕，然后设置顶部内边距 = 20+44，刚好在导航栏下面的话，会被系统向下偏移64的 SafeAreaInsets，再加上自己设置的64，就出现下移64问题。
@@ -142,9 +149,7 @@ NSString、 NSNumber、NSDate、 NSArray、NSDictionary
 
 我原来认为NSUserDefaults存不了数组，又换成了字典，但是还是报错，最后求助网友大神解决了，是我里边的数据结构有"&lt;null&gt;"，而NSUserDefaults是不能被成功解析并存入的，所有在存入之前需要将里边的"&lt;null&gt;"改成""即可。
 
-##### 6.AlertView弹出问题？
+##### 6.AlertView弹出问题？MMDAlertViewController
 
 当一个提示框需要弹出另一个提示框时需要延时否则可能无法正确弹出。
-
-
 
