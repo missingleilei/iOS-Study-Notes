@@ -14,4 +14,5 @@
 * [iOS非常实用的小知识总结](iosfei-chang-shi-yong-de-xiao-zhi-shi-zong-jie.md)
 * [工作问题记录](gong-zuo-wen-ti-jiu.md)
 * [工作问题记录2](gong-zuo-wen-ti-ji-lu-2.md)
+* [IPA支付知识点](ipazhi-fu-zhi-shi-dian.md)
 
