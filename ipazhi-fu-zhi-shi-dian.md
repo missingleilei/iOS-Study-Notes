@@ -32,5 +32,111 @@
 第八步：APP 拿到查询结果，然后把这笔交易给 finish 掉。
 ```
 
+#### 三、IPA支付代码
+
+```
+#import <StoreKit/StoreKit.h>
+@interface BLPaymentManager ()<SKPaymentTransactionObserver, SKProductsRequestDelegate>
+@end
+
+@implementation BLPaymentManager
+
+- (void)dealloc {
+    [[SKPaymentQueue defaultQueue] removeTransactionObserver:self];
+}
+- (void)init {
+    self = [super init];
+    if(self) {
+    [[SKPaymentQueue defaultQueue] addTransactionObserver:self];
+    }
+    return self;
+}
+- (void)buyProduction {
+    if ([SKPaymentQueue canMakePayments]) {
+    [self getProductInfo:nil];
+    } else {
+    NSLog(@"用户禁止应用内付费购买");
+    }
+}
+
+#pragma mark 从Apple查询用户点击购买的产品的信息.
+- (void)getProductInfo:(NSString *)productIdentifier {
+    NSSet *identifiers = [NSSet setWithObject:productIdentifier];
+    SKProductsRequest *request = [[SKProductsRequest alloc] initWithProductIdentifiers:identifiers];
+    request.delegate = self;
+   [request start];
+}
+
+#pragma mark - SKPaymentTransactionObserver
+// 购买操作后的回调.
+- (void)paymentQueue:(SKPaymentQueue *)queue updatedTransactions:(NSArray<SKPaymentTransaction *>*)transactions {
+     // 这里的事务包含之前没有完成的.
+    for (SKPaymentTransaction *transcation in transactions) {
+      switch (transcation.transactionState) {
+         case SKPaymentTransactionStatePurchasing:
+              [self transcationPurchasing:transcation];
+              break;
+         case SKPaymentTransactionStatePurchased:
+              [self transcationPurchased:transcation];
+              break;
+         case SKPaymentTransactionStateFailed:
+              [self transcationFailed:transcation];
+              break;
+         case SKPaymentTransactionStateRestored:
+              [self transcationRestored:transcation];
+              break;
+         case SKPaymentTransactionStateDeferred:
+              [self transcationDeferred:transcation];
+              break;
+          }
+     }
+}
+#pragma mark - TranscationState
+// 交易中.
+- (void)transcationPurchasing:(SKPaymentTransaction *)transcation {
+    NSURL *receiptURL = [[NSBundle mainBundle] appStoreReceiptURL];
+    NSData *receipt = [NSData dataWithContentsOfURL:receiptURL];
+    if (!receipt) {
+        NSLog(@"没有收据, 处理异常");
+        return;
+    }
+    
+    // 存储到本地先.
+    // 发送到服务器, 等待验证结果.
+    [[SKPaymentQueue defaultQueue] finishTransaction:transcation];
+}
+// 交易成功.
+- (void)transcationPurchased:(SKPaymentTransaction *)transcation {
+   
+}
+
+// 交易失败.
+- (void)transcationFailed:(SKPaymentTransaction *)transcation {
+    
+}
+
+// 已经购买过该商品.
+- (void)transcationRestored:(SKPaymentTransaction *)transcation {
+    
+}
+
+// 交易延期.
+- (void)transcationDeferred:(SKPaymentTransaction *)transcation {
+    
+}
+#pragma mark - SKProductsRequestDelegate
+// 查询成功后的回调.
+- (void)productsRequest:(SKProductsRequest *)request didReceiveResponse:(SKProductsResponse *)response {
+     NSArray<SKProduct *>*products = response.products;
+     if (!products.count) {
+     NSLog(@"没有正在出售的商品");
+     return;
+     }
+     SKPayment *payment = [SKPayment paymentWithProduct:products.firstObject];
+     [[SKPaymentQueue defaultQueue] addPayment:payment];
+     }
+     @end
+```
+
 
 
