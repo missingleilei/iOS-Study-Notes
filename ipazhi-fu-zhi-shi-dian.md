@@ -1,3 +1,12 @@
+```
+/**
+* 判断设备是否越狱，依据是否存在apt和Cydia.app
+ */
+ + (BOOL)isJailbroken;
+```
+
+#### https://www.jianshu.com/p/8e5bf711f9f0 简书IPA详解
+
 #### 一、支付宝支付流程
 
 ![](/assets/2122663-a1112187db75bb54.png)
@@ -100,29 +109,29 @@
         NSLog(@"没有收据, 处理异常");
         return;
     }
-    
+
     // 存储到本地先.
     // 发送到服务器, 等待验证结果.
     [[SKPaymentQueue defaultQueue] finishTransaction:transcation];
 }
 // 交易成功.
 - (void)transcationPurchased:(SKPaymentTransaction *)transcation {
-   
+
 }
 
 // 交易失败.
 - (void)transcationFailed:(SKPaymentTransaction *)transcation {
-    
+
 }
 
 // 已经购买过该商品.
 - (void)transcationRestored:(SKPaymentTransaction *)transcation {
-    
+
 }
 
 // 交易延期.
 - (void)transcationDeferred:(SKPaymentTransaction *)transcation {
-    
+
 }
 #pragma mark - SKProductsRequestDelegate
 // 查询成功后的回调.
@@ -137,6 +146,14 @@
      }
      @end
 ```
+
+```
+将公司服务器生成的订单号 orderNo绑定到苹果的交易paymentTransaction上。第一篇文章中说了，苹果的规范是用一个product生成一个payment
+，然后将这个payment推入到paymentQueue之中，最后我们成为交易事务的监听者，在监听方法里拿到交易的paymentTransaction，我们放进去一个
+苹果的payment实例，最后得到的是一个paymentTransaction。
+```
+
+
 
 
 
