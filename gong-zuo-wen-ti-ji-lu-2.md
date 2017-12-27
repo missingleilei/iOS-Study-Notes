@@ -54,5 +54,11 @@
 
 `self.navigationController.navigationBar.topItem.title =@"";`
 
+或者
+
+```
+[[UIBarButtonItem appearance] setBackButtonTitlePositionAdjustment:UIOffsetMake(0, -60)  forBarMetrics:UIBarMetricsDefault];
+```
+
 
 
