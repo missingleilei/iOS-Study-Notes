@@ -28,8 +28,6 @@
 
 3、在xib中拖动一个scrollerView到xib中，scrollerView直接在View下面，界面结构如下：![](/assets/20160425170513070.png)
 
-
-
 4、对srollerView进行约束，并更新位置![](/assets/20160425170830284.png)
 
 5、添加约束完成之后，会发现一切正常，并没有报错，接下来我们往srollerView中添加一个View，会发现立马报错，咱不处理返回去就可以了，然后选中View，添加约束。上下左右约束后还需水平或垂直约束看滑动方向，然后我们再选中View，添加height约束，这里约束的是600，这是会发现，没有报错了，说明可以正常使用了。
@@ -44,11 +42,17 @@
 
 注意：在计算滚动范围之后立即根据某一个控件设置constant时，有的时候不起作用，这是因为界面只是加载了控件和计算出了范围，并没有刷新界面，某些控件的高度还没有被调整，这里建议在一个方法中写：
 
-`- (void)viewDidLayoutSubviews{ `
+`- (void)viewDidLayoutSubviews{`
 
 `[super viewDidLayoutSubviews];`
 
 `self.scrollerViewHeight.constant = CGRectGetMaxY(self.sendMessageBtn.frame) +50;`
 
-` }`
+`}`
+
+#### 3.返回按钮文字去掉
+
+`self.navigationController.navigationBar.topItem.title =@"";`
+
+
 
