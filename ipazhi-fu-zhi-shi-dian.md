@@ -5,7 +5,9 @@
  + (BOOL)isJailbroken;
 ```
 
-#### https://www.jianshu.com/p/8e5bf711f9f0 简书IPA详解
+#### [https://www.jianshu.com/p/8e5bf711f9f0](https://www.jianshu.com/p/8e5bf711f9f0) 简书IPA详解
+
+#### http://www.cocoachina.com/ios/20171207/21466.html
 
 #### 一、支付宝支付流程
 
@@ -150,10 +152,8 @@
 ```
 将公司服务器生成的订单号 orderNo绑定到苹果的交易paymentTransaction上。第一篇文章中说了，苹果的规范是用一个product生成一个payment
 ，然后将这个payment推入到paymentQueue之中，最后我们成为交易事务的监听者，在监听方法里拿到交易的paymentTransaction，我们放进去一个
-苹果的payment实例，最后得到的是一个paymentTransaction。
+苹果的payment实例，最后得到的是一个paymentTransactio。
 ```
-
-
 
 
 
