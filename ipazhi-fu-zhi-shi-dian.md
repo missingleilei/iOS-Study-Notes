@@ -7,7 +7,7 @@
 
 #### [https://www.jianshu.com/p/8e5bf711f9f0](https://www.jianshu.com/p/8e5bf711f9f0) 简书IPA详解
 
-#### http://www.cocoachina.com/ios/20171207/21466.html
+#### [http://www.cocoachina.com/ios/20171207/21466.html](http://www.cocoachina.com/ios/20171207/21466.html)
 
 #### 一、支付宝支付流程
 
