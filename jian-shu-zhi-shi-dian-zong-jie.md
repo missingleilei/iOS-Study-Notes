@@ -32,8 +32,11 @@ UIPasteboard pasteboard = [UIPasteboard generalPasteboard];
 如果想自定义一个控件能够使用UIPasteboard，需要在定义的时候重载
 -(BOOL)canBecomeFirstResponder和 -(BOOL)canPerformAction:(SEL)action withSender:(id)sender
 
-
 ```
 
+#### 2.终极横竖屏切换解决方案
 
+https://www.jianshu.com/p/42bc210f574b
+
+https://github.com/newyjp/BLLandscape
 
