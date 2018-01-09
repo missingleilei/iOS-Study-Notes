@@ -39,7 +39,7 @@ UIPasteboard pasteboard = [UIPasteboard generalPasteboard];
 
 #### 3.搭建Android环境
 
-https://www.jianshu.com/p/bf77cb5ce70b
+[https://www.jianshu.com/p/bf77cb5ce70b](https://www.jianshu.com/p/bf77cb5ce70b)
 
 #### 4.iOS-9.0后跳支付左上角返回键解决办法
 
@@ -79,7 +79,74 @@ https://www.jianshu.com/p/bf77cb5ce70b
 ！！在每次支付处理结束，要把NSUserDefaults对应的键值清除。
 ```
 
+#### 5.一句代码实现银行卡手机号输入时格式化
 
+```
+- (NSString*)PhoneFormatter:(NSString*)str{
+    NSNumber * number = [NSNumber numberWithInteger:[str integerValue]];
+    NSNumberFormatter* formatter = [NSNumberFormatter new];
+    //设置分隔符
+    [formatter setGroupingSeparator:@" "];
+    //设置分割格式
+    formatter.positiveFormat = @"###,###0";
+    NSString* string = [formatter stringFromNumber:number];
+    NSLog(@"%@",string);}
+    139 1111 2222   622 8480 4025 6489 0018 适用场景：已有数据，格式化展示。
+    
+    
+    NSNumber * number = [NSNumber numberWithInteger:[string integerValue]];
+    NSNumberFormatter * formatter = [NSNumberFormatter new];
+    //设置分隔符
+    [formatter setGroupingSeparator:@" "];
+    //设置使用组分割
+    formatter.usesGroupingSeparator = YES;
+    // 数字分割的尺寸<从右向左> 
+    formatter.groupingSize = ([string length]-3)%4>0?([string length]-3)%4:4;
+    //除了groupingSize决定的尺寸外,其他数字位分割的尺寸
+    formatter.secondaryGroupingSize = [string length]>7?4:3;            
+    //获取格式化后的字符
+    tf.text  = [formatter stringFromNumber:number];
+    
+    使用规则https://github.com/csfuwwc/NSNumberFormatterTest
+```
 
+#### 6.通过遮罩的方式设置图片圆角
 
+我想要的是左上和右上的图片圆角，其他的不变，那么这个时候要如何处理呢？借助强大的贝塞尔曲线就可以解决这种情况：
+
+```
+//给图片添加圆角
+UIBezierPath *path = [UIBezierPath bezierPathWithRoundedRect:self.coverImageView.bounds byRoundingCorners:UIRectCornerTopRight
+| UIRectCornerTopLeft cornerRadii:CGSizeMake(8.0, 8.0)];
+CAShapeLayer *shapeLayer = [CAShapeLayer layer];
+shapeLayer.frame = self.coverImageView.bounds;
+shapeLayer.path = path.CGPath;
+self.coverImageView.layer.mask = shapeLayer;
+
+//阴影效果 可以避免离屏渲染带来的性能问题
+self.containerView.layer.shadowColor = YGRGB(213, 204, 204,   1.0).CGColor;
+self.containerView.layer.shadowOffset = CGSizeMake(0, 4);
+self.containerView.layer.shadowOpacity = 0.8;
+self.containerView.layer.shouldRasterize = YES;
+self.containerView.layer.rasterizationScale = [UIScreen mainScreen].scale;
+
+```
+
+#### 7.苹果ios开发者账号申请详细过程
+
+https://www.jianshu.com/p/2a3691427313
+
+#### 8.CocoaPods安装教程
+
+https://www.jianshu.com/p/198775ed6b76
+
+#### 9.页面缓存逻辑![](/assets/屏幕快照 2018-01-09 下午4.42.17.png)
+
+#### 10.软件开发流程
+
+https://www.jianshu.com/p/0e77a4a30671
+
+![](/assets/3398368-319bae2363c26d31.jpeg)
+
+![](/assets/3398368-ebcb2e4a193813d5.png)
 
