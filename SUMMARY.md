@@ -17,4 +17,5 @@
 * [IPA支付知识点](ipazhi-fu-zhi-shi-dian.md)
 * [iOS UIWebView内存泄露问题](ios-uiwebviewnei-cun-xie-lu-wen-ti.md)
 * [主题换肤](zhu-ti-huan-fu.md)
+* [简书知识点总结](jian-shu-zhi-shi-dian-zong-jie.md)
 
