@@ -1,10 +1,8 @@
-
-
 ```
 WKWebViewConfiguration *configuration = [[WKWebViewConfiguration alloc]init];
 _userContentController =[[WKUserContentController alloc]init];
 configuration.userContentController= _userContentController;
-    
+
 _loanWeb = [[WKWebView alloc] initWithFrame:CGRectMake(0,0, KScreenWidth, KScreenHigh - KNavBar-KTabBar) configuration:configuration];
 [_userContentController addScriptMessageHandler:self name:@"login"];
 
@@ -16,12 +14,15 @@ _loanWeb.navigationDelegate = self;
 
 #pragma mark - WKScriptMessageHandler
 - (void)userContentController:(WKUserContentController *)userContentController didReceiveScriptMessage:(WKScriptMessage *)message{
-    
+
     //message.body  --  Allowed types are NSNumber, NSString, NSDate, NSArray,NSDictionary, and NSNull.
     if ([message.name isEqualToString:@"login"]) {
 
     }
 }
+
+//这里需要注意，前面增加过的方法一定要remove掉。 有点问题
+[_userContentController removeScriptMessageHandlerForName:@"login"];
 ```
 
 
