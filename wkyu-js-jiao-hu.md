@@ -23,6 +23,41 @@ _loanWeb.navigationDelegate = self;
 
 //这里需要注意，前面增加过的方法一定要remove掉。 有点问题
 [_userContentController removeScriptMessageHandlerForName:@"login"];
+
+UIWebView加载word文档
+
+1.打开本地的word文档，这里word文档的文件名为：sqlite数据库.docx
+
+NSString *path = [[NSBundle mainBundle] pathForResource:@"sqlite数据库" ofType:@"docx"];
+NSURL *url = [NSURL fileURLWithPath:path];
+UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, Width, Height)];
+[webView loadRequest:[NSURLRequest requestWithURL:url]];
+[webView sizeToFit];
+ webView.scalesPageToFit = YES;
+ webView.delegate = self;
+ [self.view addSubview:webView];
+ self.webView = webView;
+
+2.通过URL加载word文档
+NSURL *url = [NSURL URLWithString:@"http://test.yzp.art-d.com.cn:88/static/upload/111_1.doc"];
+NSData *data = [[NSData alloc] initWithContentsOfURL:url];
+UIWebView *webView = [[UIWebView alloc] initWithFrame:CGRectMake(0, 0, Width, Height)];
+[webView loadRequest:[NSURLRequest requestWithURL:url]];
+[webView sizeToFit];
+webView.scalesPageToFit = YES;
+webView.delegate = self;
+[self.view addSubview:webView];
+self.webView = webView;
+另外，通过webView的 loadData: MIMEType: textEncodingName: baseURL:这个方法也可以加载出来。
+
+此外，我想拿到word显示的文字内容，可以通过执行js代码
+-(void)webViewDidFinishLoad:(UIWebView *)webView{
+    NSString *strings = [webView stringByEvaluatingJavaScriptFromString:@"document.body.innerText"];
+    NSLog(@"%@",strings);
+｝
+这里的strings就是word文档文字内容。
+另外，通过NSString *strings = [webView stringByEvaluatingJavaScriptFromString:@"document.body.innerHTML"];
+这里获得的strings为word文档内容的html格式。
 ```
 
 
