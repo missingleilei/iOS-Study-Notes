@@ -24,4 +24,5 @@
 * [18年总结](18nian-zong-jie.md)
 * [WK与JS交互](wkyu-js-jiao-hu.md)
 * [Git必须要理解的GitFlow](gitbi-xu-yao-li-jie-de-gitflow.md)
+* [精准计算之NSDecimalNumber](jing-zhun-ji-suan-zhi-nsdecimalnumber.md)
 
